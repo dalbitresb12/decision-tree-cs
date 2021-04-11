@@ -1,6 +1,6 @@
 ﻿
 namespace DecisionTreeCS {
-  partial class Form1 {
+  partial class MainActivity {
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -37,14 +37,14 @@ namespace DecisionTreeCS {
       this.startBtn.UseVisualStyleBackColor = true;
       this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
       // 
-      // Form1
+      // MainActivity
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(800, 450);
       this.Controls.Add(this.startBtn);
-      this.Name = "Form1";
-      this.Text = "Form1";
+      this.Name = "MainActivity";
+      this.Text = "MainActivity";
       this.ResumeLayout(false);
 
     }
@@ -54,4 +54,3 @@ namespace DecisionTreeCS {
     private System.Windows.Forms.Button startBtn;
   }
 }
-
