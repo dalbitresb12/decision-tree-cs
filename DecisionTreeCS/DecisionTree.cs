@@ -84,8 +84,8 @@ namespace DecisionTreeCS {
     }
 
     public static double CalculateInfoGain(List<ParsedExample> left, List<ParsedExample> right, double current) {
-      double avg = Convert.ToDouble(left.Count) / (Convert.ToDouble(left.Count) + Convert.ToDouble(right.Count));
-      return current - (avg * CalculateGini(left) - (1 - avg) * CalculateGini(right));
+      double avg = Convert.ToDouble(left.Count) / Convert.ToDouble(left.Count + right.Count);
+      return current - (avg * CalculateGini(left) + (1 - avg) * CalculateGini(right));
     }
 
     public static (double gain, Question question) FindBestSplit(List<ParsedExample> rows) {
