@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 namespace DecisionTreeCS {
   class Feature {
     public string Name {
-      get;
-      private set;
+      get; set;
     }
     public dynamic Value {
-      get;
-      private set;
+      get; set;
     }
 
-    public bool IsNumeric => Value is decimal || Value is int || Value is float || Value is double;
+    public bool IsNumeric => Value is decimal;
 
     public Feature(string name, dynamic value) {
       Name = name;

@@ -1,46 +1,89 @@
 ﻿using System;
+using System.Linq;
+using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Globalization;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace DecisionTreeCS {
   public partial class MainActivity : Form {
-    List<ParsedExample> trainingData;
-    DecisionTree tree;
+    readonly CsvConfiguration csvConfig;
+    readonly List<Row> trainingData;
+    string csvFilePath;
 
     public MainActivity() {
       InitializeComponent();
-      resultLabel.Text = "";
-
-      trainingData = new List<ParsedExample> {
-        new ParsedExample("lluvioso", "calido", "alto", "bajo", "no"),
-        new ParsedExample("lluvioso", "calido", "alto", "alto", "no"),
-        new ParsedExample("nublado", "calido", "alto", "bajo", "si"),
-        new ParsedExample("soleado", "temp media", "alto", "bajo", "si"),
-        new ParsedExample("soleado", "frio", "normal", "bajo", "si"),
-        new ParsedExample("soleado", "frio", "normal", "alto", "no"),
-        new ParsedExample("nublado", "frio", "normal", "alto", "si"),
-        new ParsedExample("lluvioso", "temp media", "alto", "bajo", "no"),
-        new ParsedExample("lluvioso", "frio", "normal", "bajo", "si"),
-        new ParsedExample("nublado", "temp media", "alto", "alto", "si"),
-        new ParsedExample("soleado", "temp media", "alto", "alto", "no"),
+      csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture) {
+        HasHeaderRecord = false
       };
-      tree = new DecisionTree();
-      tree.Fit(trainingData);
+      trainingData = new List<Row>();
+      csvFilePath = string.Empty;
     }
 
-    private void startBtn_Click(object sender, EventArgs e) {
-      string sky = skyPrediction.SelectedItem as string;
-      string ambient = ambientPrediction.SelectedItem as string;
-      string humidity = humidityPrediction.SelectedItem as string;
-      string windspeed = windspeedPrediction.SelectedItem as string;
+    private void fileSelectBtn_Click(object sender, EventArgs e) {
+      if (csvFileLoader.ShowDialog() == DialogResult.OK) {
+        // Get the path of the specified file
+        csvFilePath = csvFileLoader.FileName;
+        fileNameLabel.Text = $"Seleccionado: {csvFilePath}";
 
-      // if (sky.Length == 0 || ambient.Length == 0 || humidity.Length == 0 || windspeed.Length == 0)
-      //   return;
+        // Read the contents of the file into a stream
+        Stream fileStream = csvFileLoader.OpenFile();
+        using (StreamReader reader = new StreamReader(fileStream))
+        using (CsvReader csv = new CsvReader(reader, csvConfig)) {
+          // Wrap all this code in a try-catch block to catch parsing errors
+          try {
+            // Read every line individually
+            while (csv.Read()) {
+              // Initialize the feature rows
+              List<Feature> features = new List<Feature>();
 
-      ParsedExample example = new ParsedExample(sky, ambient, humidity, windspeed, "test");
+              // Parse the current record
+              var record = csv.GetRecord<dynamic>();
 
-      DecisionNode prediction = tree.Predict(example);
-      resultLabel.Text = prediction.ToString();
+              // This will probably be a Dictionary<string, object>, loop over every item
+              foreach (var feature in record) {
+                // Try casting (this might fail, the try-catch block will prevent the app from dying)
+                string featureName = feature.Key as string;
+                string featureValue = feature.Value as string;
+
+                Feature parsed = null;
+                // Try parsing the value as a number, if successful use that 
+                if (decimal.TryParse(featureName, out decimal num))
+                  parsed = new Feature(featureName, num);
+                else
+                  parsed = new Feature(featureName, featureValue);
+
+                // If successful, add it to the feature list
+                if (parsed != null)
+                  features.Add(parsed);
+              }
+
+              trainingData.Add(new Row(features));
+            }
+          } catch (Exception) {
+            // This will catch any type of Exception (for now)
+            Console.WriteLine("Invalid CSV file.");
+          }
+        }
+        updateTextBox();
+      }
+    }
+
+    private void updateTextBox() {
+      List<string> lines = new List<string>();
+      foreach (Row row in trainingData) {
+        IEnumerable<string> values = row.Select(i => {
+          if (i.IsNumeric)
+            return ((decimal)i.Value).ToString();
+          else
+            return i.Value as string;
+        });
+        string str = string.Join(", ", values);
+        lines.Add(str);
+      }
+      fileContentTextBox.Lines = lines.ToArray();
     }
   }
 }
