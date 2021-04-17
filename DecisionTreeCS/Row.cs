@@ -24,6 +24,20 @@ namespace DecisionTreeCS {
       set => features.Insert(index, value);
     }
 
+    public static Row ParseRowFromCsv(dynamic record) {
+      Row row = new Row();
+      // This will probably be a Dictionary<string, string>,
+      // therefore, feature should be KeyValuePair<string, string>.
+      foreach (var feature in record) {
+        // Try parsing this record as a feature
+        Feature parsedFeature = Feature.ParseFeatureFromCsv(feature);
+        // If successful, add it to the feature list
+        if (parsedFeature != null)
+          row.Add(parsedFeature);
+      }
+      return row;
+    }
+
     public IEnumerator<Feature> GetEnumerator() => features.GetEnumerator();
 
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() =>

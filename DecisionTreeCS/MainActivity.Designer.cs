@@ -28,6 +28,7 @@ namespace DecisionTreeCS {
       this.csvFileLoader = new System.Windows.Forms.OpenFileDialog();
       this.fileNameLabel = new System.Windows.Forms.Label();
       this.fileContentTextBox = new System.Windows.Forms.TextBox();
+      this.dataTypesTextBox = new System.Windows.Forms.TextBox();
       this.SuspendLayout();
       // 
       // fileSelectBtn
@@ -64,11 +65,20 @@ namespace DecisionTreeCS {
       this.fileContentTextBox.Size = new System.Drawing.Size(441, 211);
       this.fileContentTextBox.TabIndex = 2;
       // 
+      // dataTypesTextBox
+      // 
+      this.dataTypesTextBox.Location = new System.Drawing.Point(13, 259);
+      this.dataTypesTextBox.Name = "dataTypesTextBox";
+      this.dataTypesTextBox.ReadOnly = true;
+      this.dataTypesTextBox.Size = new System.Drawing.Size(440, 20);
+      this.dataTypesTextBox.TabIndex = 3;
+      // 
       // MainActivity
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(465, 364);
+      this.Controls.Add(this.dataTypesTextBox);
       this.Controls.Add(this.fileContentTextBox);
       this.Controls.Add(this.fileNameLabel);
       this.Controls.Add(this.fileSelectBtn);
@@ -85,5 +95,6 @@ namespace DecisionTreeCS {
     private System.Windows.Forms.OpenFileDialog csvFileLoader;
     private System.Windows.Forms.Label fileNameLabel;
     private System.Windows.Forms.TextBox fileContentTextBox;
+    private System.Windows.Forms.TextBox dataTypesTextBox;
   }
 }

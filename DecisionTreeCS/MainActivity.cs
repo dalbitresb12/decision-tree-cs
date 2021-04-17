@@ -25,7 +25,7 @@ namespace DecisionTreeCS {
     private void fileSelectBtn_Click(object sender, EventArgs e) {
       if (csvFileLoader.ShowDialog() == DialogResult.OK) {
         // Get the path of the specified file
-        csvFilePath = csvFileLoader.FileName;
+        csvFilePath = csvFileLoader.SafeFileName;
         fileNameLabel.Text = $"Seleccionado: {csvFilePath}";
 
         // Read the contents of the file into a stream
@@ -36,31 +36,11 @@ namespace DecisionTreeCS {
           try {
             // Read every line individually
             while (csv.Read()) {
-              // Initialize the feature rows
-              List<Feature> features = new List<Feature>();
-
               // Parse the current record
               var record = csv.GetRecord<dynamic>();
-
-              // This will probably be a Dictionary<string, object>, loop over every item
-              foreach (var feature in record) {
-                // Try casting (this might fail, the try-catch block will prevent the app from dying)
-                string featureName = feature.Key as string;
-                string featureValue = feature.Value as string;
-
-                Feature parsed = null;
-                // Try parsing the value as a number, if successful use that 
-                if (decimal.TryParse(featureName, out decimal num))
-                  parsed = new Feature(featureName, num);
-                else
-                  parsed = new Feature(featureName, featureValue);
-
-                // If successful, add it to the feature list
-                if (parsed != null)
-                  features.Add(parsed);
-              }
-
-              trainingData.Add(new Row(features));
+              Row featureRow = Row.ParseRowFromCsv(record);
+              if (featureRow != null)
+                trainingData.Add(featureRow);
             }
           } catch (Exception) {
             // This will catch any type of Exception (for now)
@@ -75,15 +55,24 @@ namespace DecisionTreeCS {
       List<string> lines = new List<string>();
       foreach (Row row in trainingData) {
         IEnumerable<string> values = row.Select(i => {
-          if (i.IsNumeric)
+          if (i.IsNumeric) {
             return ((decimal)i.Value).ToString();
-          else
+          } else {
             return i.Value as string;
+          }
         });
         string str = string.Join(", ", values);
         lines.Add(str);
       }
       fileContentTextBox.Lines = lines.ToArray();
+      if (trainingData.Count > 0) {
+        dataTypesTextBox.Text = string.Join(", ", trainingData[0].Select(i => {
+          if (i.IsNumeric)
+            return "numeric";
+          else
+            return "categorical";
+        }));
+      }
     }
   }
 }
