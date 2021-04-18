@@ -6,22 +6,30 @@ using System.Threading.Tasks;
 
 namespace DecisionTreeCS {
   class Question {
-    readonly ExampleProperty property;
-    readonly string value;
+    readonly int property;
+    readonly string propertyName;
+    readonly Feature feature;
 
-    public Question(ExampleProperty property, string value) {
+    public Question(int property, string propertyName, Feature feature) {
       this.property = property;
-      this.value = value;
+      this.propertyName = propertyName;
+      this.feature = feature;
     }
 
-    public bool Match(ParsedExample example) {
-      string exampleValue = example.GetProperty(property);
-      return value == exampleValue;
+    public bool Match(Row row) {
+      Feature feature = row[property];
+      if (feature.IsNumeric && this.feature.IsNumeric) {
+        return feature.Value >= this.feature.Value;
+      }
+      return feature.Value == this.feature.Value;
     }
 
-    override public string ToString() {
-      string propertyName = Enum.GetName(typeof(ExampleProperty), property);
-      return $"Is ${propertyName} == ${value}?";
+    public override string ToString() {
+      if (feature.IsNumeric) {
+        return $"Is ${propertyName} >= ${feature.Value}?";
+      } else {
+        return $"Is ${propertyName} == ${feature.Value}?";
+      }
     }
   }
 }

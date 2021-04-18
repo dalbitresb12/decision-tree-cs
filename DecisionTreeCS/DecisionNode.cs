@@ -9,7 +9,7 @@ namespace DecisionTreeCS {
     public readonly Question question = null;
     public readonly DecisionNode trueBranch = null;
     public readonly DecisionNode falseBranch = null;
-    public readonly List<ParsedExample> rows = null;
+    public readonly Dataset dataset = null;
     public readonly Dictionary<string, int> predictions = null;
 
     public bool IsLeaf => predictions != null;
@@ -20,12 +20,12 @@ namespace DecisionTreeCS {
       this.falseBranch = falseBranch;
     }
 
-    public DecisionNode(List<ParsedExample> examples) {
-      rows = examples;
-      predictions = DecisionTree.GetClassCount(examples);
+    public DecisionNode(Dataset dataset) {
+      this.dataset = dataset;
+      predictions = DecisionTree.GetClassCount(dataset);
     }
 
-    override public string ToString() {
+    public override string ToString() {
       if (IsLeaf) {
         double total = predictions.Aggregate(0.0, (acc, x) => acc + x.Value);
         string str = "{ ";

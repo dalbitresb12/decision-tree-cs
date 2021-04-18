@@ -82,7 +82,6 @@
     <Compile Include="MainActivity.Designer.cs">
       <DependentUpon>MainActivity.cs</DependentUpon>
     </Compile>
-    <Compile Include="ParsedExample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs" />

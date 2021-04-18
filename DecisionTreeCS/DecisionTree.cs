@@ -6,29 +6,15 @@ using System.Threading.Tasks;
 
 namespace DecisionTreeCS {
   class DecisionTree {
-    List<ParsedExample> examples;
+    Dataset dataset;
     DecisionNode root;
 
-    public void Fit(List<ParsedExample> examples) {
-      this.examples = examples;
-      root = BuildTree(examples);
+    public void Fit(Dataset dataset) {
+      this.dataset = dataset;
+      root = BuildTree(dataset);
     }
 
-    static DecisionNode BuildTree(List<ParsedExample> rows) {
-      (double gain, Question question) = FindBestSplit(rows);
-
-      if (gain == 0)
-        return new DecisionNode(rows);
-
-      (List<ParsedExample> trueRows, List<ParsedExample> falseRows) = PartitionDataset(rows, question);
-
-      DecisionNode trueBranch = BuildTree(trueRows);
-      DecisionNode falseBranch = BuildTree(falseRows);
-
-      return new DecisionNode(question, trueBranch, falseBranch);
-    }
-
-    public DecisionNode Predict(ParsedExample row, DecisionNode node = null) {
+    public DecisionNode Predict(Row row, DecisionNode node = null) {
       if (node == null)
         node = root;
 
@@ -41,30 +27,35 @@ namespace DecisionTreeCS {
       return Predict(row, node.falseBranch);
     }
 
-    public static HashSet<string> FindUniqueValues(List<ParsedExample> rows, ExampleProperty col) {
-      HashSet<string> values = new HashSet<string>();
-      foreach (ParsedExample row in rows) {
-        _ = values.Add(row.GetProperty(col));
-      }
-      return values;
+    private static DecisionNode BuildTree(Dataset dataset) {
+      (double gain, Question question) = FindBestSplit(dataset);
+
+      if (gain == 0)
+        return new DecisionNode(dataset);
+
+      (Dataset trueRows, Dataset falseRows) = PartitionDataset(dataset, question);
+
+      DecisionNode trueBranch = BuildTree(trueRows);
+      DecisionNode falseBranch = BuildTree(falseRows);
+
+      return new DecisionNode(question, trueBranch, falseBranch);
     }
 
-    public static Dictionary<string, int> GetClassCount(List<ParsedExample> rows) {
+    public static Dictionary<string, int> GetClassCount(Dataset dataset) {
       Dictionary<string, int> counts = new Dictionary<string, int>();
-      foreach (ParsedExample row in rows) {
-        string label = row.isGame;
-        if (!counts.ContainsKey(label)) {
+      foreach (Row row in dataset) {
+        string label = row[row.Count - 1].ToString();
+        if (!counts.ContainsKey(label))
           counts[label] = 0;
-        }
         counts[label] += 1;
       }
       return counts;
     }
 
-    public static (List<ParsedExample> trueRows, List<ParsedExample> falseRows) PartitionDataset(List<ParsedExample> rows, Question question) {
-      List<ParsedExample> trueRows = new List<ParsedExample>();
-      List<ParsedExample> falseRows = new List<ParsedExample>();
-      foreach (ParsedExample row in rows) {
+    public static (Dataset trueRows, Dataset falseRows) PartitionDataset(Dataset dataset, Question question) {
+      Dataset trueRows = new Dataset(dataset.Headers);
+      Dataset falseRows = new Dataset(dataset.Headers);
+      foreach (Row row in dataset) {
         if (question.Match(row))
           trueRows.Add(row);
         else
@@ -73,34 +64,33 @@ namespace DecisionTreeCS {
       return (trueRows, falseRows);
     }
 
-    public static double CalculateGini(List<ParsedExample> rows) {
-      Dictionary<string, int> counts = GetClassCount(rows);
+    public static double CalculateGini(Dataset dataset) {
+      Dictionary<string, int> counts = GetClassCount(dataset);
       double impurity = 1;
       foreach (KeyValuePair<string, int> label in counts) {
-        double probability = Convert.ToDouble(label.Value) / Convert.ToDouble(rows.Count);
+        double probability = Convert.ToDouble(label.Value) / Convert.ToDouble(dataset.Count);
         impurity -= Math.Pow(probability, 2);
       }
       return impurity;
     }
 
-    public static double CalculateInfoGain(List<ParsedExample> left, List<ParsedExample> right, double current) {
+    public static double CalculateInfoGain(Dataset left, Dataset right, double current) {
       double avg = Convert.ToDouble(left.Count) / Convert.ToDouble(left.Count + right.Count);
       return current - (avg * CalculateGini(left) + (1 - avg) * CalculateGini(right));
     }
 
-    public static (double gain, Question question) FindBestSplit(List<ParsedExample> rows) {
+    public static (double gain, Question question) FindBestSplit(Dataset dataset) {
       double bestGain = 0;
       Question bestQuestion = null;
-      double currentGini = CalculateGini(rows);
-      int featureCount = rows[0].GetFeaturesCount();
+      double currentGini = CalculateGini(dataset);
+      int featureCount = dataset.MaxFeatureCount;
 
       for (int i = 0; i < featureCount; ++i) {
-        ExampleProperty property = (ExampleProperty)i;
-        HashSet<string> values = FindUniqueValues(rows, property);
+        HashSet<Feature> features = dataset.GetUniqueValues(i);
 
-        foreach (string val in values) {
-          Question question = new Question(property, val);
-          (List<ParsedExample> trueRows, List<ParsedExample> falseRows) = PartitionDataset(rows, question);
+        foreach (Feature feature in features) {
+          Question question = new Question(i, dataset.Headers[i], feature);
+          (Dataset trueRows, Dataset falseRows) = PartitionDataset(dataset, question);
           if (trueRows.Count == 0 || falseRows.Count == 0)
             continue;
           double gain = CalculateInfoGain(trueRows, falseRows, currentGini);

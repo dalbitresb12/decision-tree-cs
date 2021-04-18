@@ -12,17 +12,19 @@ namespace DecisionTreeCS {
     readonly List<Row> rows;
     bool hasConvertedFirstRow = false;
 
-    public Dataset(List<Row> rows = null, List<string> headers = null) {
+    public Dataset(List<string> headers): this(null, headers) {}
+
+    public Dataset(List <Row> rows = null, List<string> headers = null) {
       if (rows == null) {
         this.rows = new List<Row>();
       } else {
         this.rows = rows;
       }
       if (headers == null) {
-        headers = new List<string>();
-        for (int i = 0; i < MaxFeatureCount; ++i) {
+        this.headers = new List<string>();
+        for (int i = 0; i < MaxFeatureCount + 1; ++i) {
           string header = $"Field{i + 1}";
-          headers.Add(header);
+          this.headers.Add(header);
         }
       } else {
         this.headers = headers;
@@ -40,7 +42,7 @@ namespace DecisionTreeCS {
           if (row.Count > count)
             count = row.Count;
         }
-        return count;
+        return count - 1;
       }
     }
 

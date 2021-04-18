@@ -83,6 +83,15 @@ namespace DecisionTreeCS {
 
     private void startTrainingBtn_Click(object sender, EventArgs e) {
       decisionTree = new DecisionTree();
+      decisionTree.Fit(trainingData);
+      List<Feature> features = new List<Feature> {
+        new Feature("nublado"),
+        new Feature("calido"),
+        new Feature("normal"),
+        new Feature("bajo"),
+      };
+      DecisionNode node = decisionTree.Predict(new Row(features));
+      Console.WriteLine(node.ToString());
     }
 
     private void useHeaderCheckbox_CheckedChanged(object sender, EventArgs e) {
