@@ -9,13 +9,13 @@ using CsvHelper.Configuration;
 
 namespace DecisionTreeCS {
   public partial class MainActivity : Form {
-    DecisionTree decisionTree;
+    DecisionTree tree;
     Dataset trainingData;
     string csvFilePath;
 
     public MainActivity() {
       InitializeComponent();
-      decisionTree = null;
+      tree = null;
       trainingData = null;
       csvFilePath = string.Empty;
     }
@@ -26,7 +26,12 @@ namespace DecisionTreeCS {
         useHeaderCheckbox.Enabled = false;
         useHeaderCheckbox.Checked = false;
 
+        // Force disable Buttons
+        startTrainingBtn.Enabled = false;
+        showTreeBtn.Enabled = false;
+
         // Clear any previous training data
+        tree = null;
         trainingData = new Dataset();
 
         CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture) {
@@ -67,6 +72,8 @@ namespace DecisionTreeCS {
 
           // Reset the CheckBox state to enabled
           useHeaderCheckbox.Enabled = true;
+          // Re-enable the training button
+          startTrainingBtn.Enabled = true;
         } catch (Exception) {
           // This will catch any type of Exception (for now)
           // Clear any fields that were added
@@ -82,16 +89,20 @@ namespace DecisionTreeCS {
     }
 
     private void startTrainingBtn_Click(object sender, EventArgs e) {
-      decisionTree = new DecisionTree();
-      decisionTree.Fit(trainingData);
-      List<Feature> features = new List<Feature> {
-        new Feature("nublado"),
-        new Feature("calido"),
-        new Feature("normal"),
-        new Feature("bajo"),
-      };
-      DecisionNode node = decisionTree.Predict(new Row(features));
-      Console.WriteLine(node.ToString());
+      // Disable the show tree button
+      showTreeBtn.Enabled = false;
+      tree = new DecisionTree();
+      tree.Fit(trainingData);
+      // Re-enable the show tree button
+      showTreeBtn.Enabled = true;
+    }
+
+    private void showTreeBtn_Click(object sender, EventArgs e) {
+      if (tree != null) {
+        string title = "Representación del árbol de decision generado";
+        string message = tree.ToString();
+        _ = MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
     }
 
     private void useHeaderCheckbox_CheckedChanged(object sender, EventArgs e) {

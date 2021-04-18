@@ -32,6 +32,7 @@ namespace DecisionTreeCS {
       this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
       this.startTrainingBtn = new System.Windows.Forms.Button();
       this.fieldsPanel = new System.Windows.Forms.FlowLayoutPanel();
+      this.showTreeBtn = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.flowLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -96,6 +97,7 @@ namespace DecisionTreeCS {
       this.flowLayoutPanel1.AutoSize = true;
       this.flowLayoutPanel1.Controls.Add(this.fileSelectBtn);
       this.flowLayoutPanel1.Controls.Add(this.startTrainingBtn);
+      this.flowLayoutPanel1.Controls.Add(this.showTreeBtn);
       this.flowLayoutPanel1.Controls.Add(this.useHeaderCheckbox);
       this.flowLayoutPanel1.Controls.Add(this.fileNameLabel);
       this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -107,7 +109,7 @@ namespace DecisionTreeCS {
       // 
       // startTrainingBtn
       // 
-      this.flowLayoutPanel1.SetFlowBreak(this.startTrainingBtn, true);
+      this.startTrainingBtn.Enabled = false;
       this.startTrainingBtn.Location = new System.Drawing.Point(133, 8);
       this.startTrainingBtn.Name = "startTrainingBtn";
       this.startTrainingBtn.Size = new System.Drawing.Size(119, 23);
@@ -125,6 +127,18 @@ namespace DecisionTreeCS {
       this.fieldsPanel.Padding = new System.Windows.Forms.Padding(5);
       this.fieldsPanel.Size = new System.Drawing.Size(578, 284);
       this.fieldsPanel.TabIndex = 1;
+      // 
+      // showTreeBtn
+      // 
+      this.showTreeBtn.Enabled = false;
+      this.flowLayoutPanel1.SetFlowBreak(this.showTreeBtn, true);
+      this.showTreeBtn.Location = new System.Drawing.Point(258, 8);
+      this.showTreeBtn.Name = "showTreeBtn";
+      this.showTreeBtn.Size = new System.Drawing.Size(119, 23);
+      this.showTreeBtn.TabIndex = 4;
+      this.showTreeBtn.Text = "Ver árbol de decision";
+      this.showTreeBtn.UseVisualStyleBackColor = true;
+      this.showTreeBtn.Click += new System.EventHandler(this.showTreeBtn_Click);
       // 
       // MainActivity
       // 
@@ -154,5 +168,6 @@ namespace DecisionTreeCS {
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private System.Windows.Forms.Button startTrainingBtn;
     private System.Windows.Forms.FlowLayoutPanel fieldsPanel;
+    private System.Windows.Forms.Button showTreeBtn;
   }
 }

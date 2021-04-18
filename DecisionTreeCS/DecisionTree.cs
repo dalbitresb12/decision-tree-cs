@@ -103,5 +103,20 @@ namespace DecisionTreeCS {
 
       return (bestGain, bestQuestion);
     }
+
+    public override string ToString() => TreeToString(root);
+
+    private static string TreeToString(DecisionNode node, string spacing = "") {
+      if (node.IsLeaf)
+        return $"{spacing}Resultado: {node}\n";
+
+      string str = $"{spacing}{node.question}\n";
+      str += $"{spacing}--> Sí:\n";
+      str += TreeToString(node.trueBranch, spacing + "  ");
+      str += $"{spacing}--> No:\n";
+      str += TreeToString(node.falseBranch, spacing + "  ");
+
+      return str;
+    }
   }
 }
