@@ -25,12 +25,13 @@ namespace DecisionTreeCS {
     }
 
     public override bool Equals(object obj) {
-      if (Value is decimal number)
-        return number.Equals(obj);
-      else if (Value is string str)
-        return str.Equals(obj);
-      else
-        return base.Equals(obj);
+      if (obj is Feature feature) {
+        if (Value is decimal number)
+          return number.Equals(feature.Value);
+        else if (Value is string str)
+          return str.Equals(feature.Value);
+      }
+      return base.Equals(obj);
     }
 
     public override string ToString() {
