@@ -31,8 +31,8 @@ namespace DecisionTreeCS {
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
       this.startTrainingBtn = new System.Windows.Forms.Button();
-      this.fieldsPanel = new System.Windows.Forms.FlowLayoutPanel();
       this.showTreeBtn = new System.Windows.Forms.Button();
+      this.fieldsPanel = new System.Windows.Forms.FlowLayoutPanel();
       this.tableLayoutPanel1.SuspendLayout();
       this.flowLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -118,16 +118,6 @@ namespace DecisionTreeCS {
       this.startTrainingBtn.UseVisualStyleBackColor = true;
       this.startTrainingBtn.Click += new System.EventHandler(this.startTrainingBtn_Click);
       // 
-      // fieldsPanel
-      // 
-      this.fieldsPanel.AutoScroll = true;
-      this.fieldsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.fieldsPanel.Location = new System.Drawing.Point(3, 74);
-      this.fieldsPanel.Name = "fieldsPanel";
-      this.fieldsPanel.Padding = new System.Windows.Forms.Padding(5);
-      this.fieldsPanel.Size = new System.Drawing.Size(578, 284);
-      this.fieldsPanel.TabIndex = 1;
-      // 
       // showTreeBtn
       // 
       this.showTreeBtn.Enabled = false;
@@ -140,10 +130,21 @@ namespace DecisionTreeCS {
       this.showTreeBtn.UseVisualStyleBackColor = true;
       this.showTreeBtn.Click += new System.EventHandler(this.showTreeBtn_Click);
       // 
+      // fieldsPanel
+      // 
+      this.fieldsPanel.AutoScroll = true;
+      this.fieldsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.fieldsPanel.Location = new System.Drawing.Point(3, 74);
+      this.fieldsPanel.Name = "fieldsPanel";
+      this.fieldsPanel.Padding = new System.Windows.Forms.Padding(5);
+      this.fieldsPanel.Size = new System.Drawing.Size(578, 284);
+      this.fieldsPanel.TabIndex = 1;
+      // 
       // MainActivity
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.SystemColors.Control;
       this.ClientSize = new System.Drawing.Size(584, 361);
       this.Controls.Add(this.tableLayoutPanel1);
       this.MinimumSize = new System.Drawing.Size(600, 400);

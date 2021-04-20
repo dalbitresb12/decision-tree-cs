@@ -68,7 +68,7 @@ namespace DecisionTreeCS {
           fileNameLabel.Text = $"Seleccionado: {csvFilePath}";
 
           // Display the fields in the UI
-          createFieldsFromDataset(fieldsPanel, trainingData);
+          CreateFieldsFromDataset(fieldsPanel, trainingData);
 
           // Reset the CheckBox state to enabled
           useHeaderCheckbox.Enabled = true;
@@ -99,9 +99,9 @@ namespace DecisionTreeCS {
 
     private void showTreeBtn_Click(object sender, EventArgs e) {
       if (tree != null) {
-        string title = "Representación del árbol de decision generado";
-        string message = tree.ToString();
-        _ = MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        using (TreeViewActivity form = new TreeViewActivity(tree)) {
+          _ = form.ShowDialog();
+        }
       }
     }
 
@@ -111,12 +111,13 @@ namespace DecisionTreeCS {
         // Convert the first row to a header
         if (trainingData.ConvertFirstRowToHeader()) {
           // Update the UI
-          createFieldsFromDataset(fieldsPanel, trainingData);        
+          CreateFieldsFromDataset(fieldsPanel, trainingData);
+          checkBox.Enabled = false;
         }
       }
     }
 
-    private static void createFieldsFromDataset(FlowLayoutPanel panel, Dataset dataset) {
+    private static void CreateFieldsFromDataset(FlowLayoutPanel panel, Dataset dataset) {
       // Prevent running if dataset is null
       if (dataset == null)
         return;
