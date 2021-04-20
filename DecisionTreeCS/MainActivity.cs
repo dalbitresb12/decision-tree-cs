@@ -12,6 +12,7 @@ namespace DecisionTreeCS {
     DecisionTree tree;
     Dataset trainingData;
     string csvFilePath;
+    PredictionActivity predictionActivity;
 
     public MainActivity() {
       InitializeComponent();
@@ -29,6 +30,7 @@ namespace DecisionTreeCS {
         // Force disable Buttons
         startTrainingBtn.Enabled = false;
         showTreeBtn.Enabled = false;
+        predictionsBtn.Enabled = false;
 
         // Clear any previous training data
         tree = null;
@@ -90,11 +92,38 @@ namespace DecisionTreeCS {
 
     private void startTrainingBtn_Click(object sender, EventArgs e) {
       // Disable the show tree button
+      startTrainingBtn.Enabled = false;
+      fileSelectBtn.Enabled = false;
+      predictionsBtn.Enabled = false;
       showTreeBtn.Enabled = false;
+      // Start training in a new tree
       tree = new DecisionTree();
       tree.Fit(trainingData);
       // Re-enable the show tree button
       showTreeBtn.Enabled = true;
+      predictionsBtn.Enabled = true;
+      fileSelectBtn.Enabled = true;
+      startTrainingBtn.Enabled = true;
+    }
+
+    private void predictionsBtn_Click(object sender, EventArgs e) {
+      // Disable buttons
+      startTrainingBtn.Enabled = false;
+      fileSelectBtn.Enabled = false;
+      predictionsBtn.Enabled = false;
+
+      // Create the form and show it
+      predictionActivity = new PredictionActivity(trainingData, predictionActivity_Closing);
+      predictionActivity.Show();
+    }
+
+    private void predictionActivity_Closing(object sender, FormClosingEventArgs e) {
+      predictionActivity = null;
+      // Re-enable buttons when the other form is closed
+      startTrainingBtn.Enabled = true;
+      fileSelectBtn.Enabled = true;
+      predictionsBtn.Enabled = true;
+      Focus();
     }
 
     private void showTreeBtn_Click(object sender, EventArgs e) {

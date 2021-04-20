@@ -33,6 +33,7 @@ namespace DecisionTreeCS {
       this.startTrainingBtn = new System.Windows.Forms.Button();
       this.showTreeBtn = new System.Windows.Forms.Button();
       this.fieldsPanel = new System.Windows.Forms.FlowLayoutPanel();
+      this.predictionsBtn = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.flowLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -98,6 +99,7 @@ namespace DecisionTreeCS {
       this.flowLayoutPanel1.Controls.Add(this.fileSelectBtn);
       this.flowLayoutPanel1.Controls.Add(this.startTrainingBtn);
       this.flowLayoutPanel1.Controls.Add(this.showTreeBtn);
+      this.flowLayoutPanel1.Controls.Add(this.predictionsBtn);
       this.flowLayoutPanel1.Controls.Add(this.useHeaderCheckbox);
       this.flowLayoutPanel1.Controls.Add(this.fileNameLabel);
       this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -121,7 +123,6 @@ namespace DecisionTreeCS {
       // showTreeBtn
       // 
       this.showTreeBtn.Enabled = false;
-      this.flowLayoutPanel1.SetFlowBreak(this.showTreeBtn, true);
       this.showTreeBtn.Location = new System.Drawing.Point(258, 8);
       this.showTreeBtn.Name = "showTreeBtn";
       this.showTreeBtn.Size = new System.Drawing.Size(119, 23);
@@ -139,6 +140,18 @@ namespace DecisionTreeCS {
       this.fieldsPanel.Padding = new System.Windows.Forms.Padding(5);
       this.fieldsPanel.Size = new System.Drawing.Size(578, 284);
       this.fieldsPanel.TabIndex = 1;
+      // 
+      // predictionsBtn
+      // 
+      this.predictionsBtn.Enabled = false;
+      this.flowLayoutPanel1.SetFlowBreak(this.predictionsBtn, true);
+      this.predictionsBtn.Location = new System.Drawing.Point(383, 8);
+      this.predictionsBtn.Name = "predictionsBtn";
+      this.predictionsBtn.Size = new System.Drawing.Size(120, 23);
+      this.predictionsBtn.TabIndex = 5;
+      this.predictionsBtn.Text = "Generar predicciones";
+      this.predictionsBtn.UseVisualStyleBackColor = true;
+      this.predictionsBtn.Click += new System.EventHandler(this.predictionsBtn_Click);
       // 
       // MainActivity
       // 
@@ -170,5 +183,6 @@ namespace DecisionTreeCS {
     private System.Windows.Forms.Button startTrainingBtn;
     private System.Windows.Forms.FlowLayoutPanel fieldsPanel;
     private System.Windows.Forms.Button showTreeBtn;
+    private System.Windows.Forms.Button predictionsBtn;
   }
 }
