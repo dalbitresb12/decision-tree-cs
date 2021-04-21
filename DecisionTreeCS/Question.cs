@@ -26,9 +26,9 @@ namespace DecisionTreeCS {
 
     public override string ToString() {
       if (feature.IsNumeric) {
-        return $"¿Es {propertyName} >= {feature.Value}?";
+        return $"¿Es {propertyName.FirstCharToLower()} >= {feature.Value}?";
       } else {
-        return $"¿Es {propertyName} == {feature.Value}?";
+        return $"¿Es {propertyName.FirstCharToLower()} == {feature.Value}?";
       }
     }
   }
