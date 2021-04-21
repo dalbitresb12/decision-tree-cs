@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
@@ -151,6 +151,8 @@ namespace DecisionTreeCS {
       if (dataset == null)
         return;
 
+      // Suspend the layout to prevent re-renders
+      panel.SuspendLayout();
       // Clear the panel before removing any previous text box
       panel.Controls.Clear();
 
@@ -165,6 +167,7 @@ namespace DecisionTreeCS {
         // Create the TextBox and assign its value
         TextBox textBox = new TextBox();
         textBox.Text = header;
+        textBox.MaxLength = 30;
         // Create the event handler
         textBox.TextChanged += new EventHandler((object sender, EventArgs e) => {
           TextBox senderTextBox = sender as TextBox;
@@ -196,6 +199,10 @@ namespace DecisionTreeCS {
 
       // Display every new control in the UI
       panel.Controls.AddRange(controls.ToArray());
+
+      // Re-render panels
+      panel.ResumeLayout(false);
+      panel.PerformLayout();
     }
   }
 }
