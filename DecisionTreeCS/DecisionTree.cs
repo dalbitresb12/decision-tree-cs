@@ -14,6 +14,8 @@ namespace DecisionTreeCS {
       root = BuildTree(dataset);
     }
 
+    public Dataset Dataset => dataset;
+
     public DecisionNode Root => root;
 
     public DecisionNode Predict(Row row, DecisionNode node = null) {
