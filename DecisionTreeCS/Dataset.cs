@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +52,11 @@ namespace DecisionTreeCS {
         _ = values.Add(row[index]);
       }
       return values;
+    }
+
+    public bool IsNumeric(int index) {
+      HashSet<Feature> values = GetUniqueValues(index);
+      return values.All(item => item.IsNumeric);
     }
 
     public bool ConvertFirstRowToHeader() {
