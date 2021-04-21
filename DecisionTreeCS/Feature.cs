@@ -41,16 +41,19 @@ namespace DecisionTreeCS {
         return Value;
     }
 
-    public static Feature ParseFromCsv(dynamic feature) {
-      // Try casting (this might fail, an outer try-catch block should prevent the app from dying)
-      string value = feature.Value as string;
-
-      // Try parsing the value as a number, if successful use that 
+    public static Feature ParseFromString(string value) {
+      // Try parsing the value as a number, if successful use that
       if (decimal.TryParse(value, out decimal num))
         return new Feature(num);
       // If parsing as number wasn't successful, use it as-is
       else
         return new Feature(value);
+    }
+
+    public static Feature ParseFromCsv(dynamic feature) {
+      // Try casting (this might fail, an outer try-catch block should prevent the app from dying)
+      string value = feature.Value as string;
+      return ParseFromString(value);
     }
   }
 }
