@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,11 @@ namespace DecisionTreeCS {
   class Row : IEnumerable<Feature> {
     readonly List<Feature> features;
 
-    public Row(List<Feature> features = null) {
-      if (features == null)
-        this.features = new List<Feature>();
-      else
-        this.features = features;
-    }
+    public Row() => features = new List<Feature>();
+
+    public Row(int capacity) => features = new List<Feature>(capacity);
+
+    public Row(IEnumerable<Feature> collection) => features = new List<Feature>(collection);
 
     public int Count => features.Count;
 
