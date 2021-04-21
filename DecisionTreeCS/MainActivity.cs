@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
@@ -113,7 +113,7 @@ namespace DecisionTreeCS {
       predictionsBtn.Enabled = false;
 
       // Create the form and show it
-      predictionActivity = new PredictionActivity(trainingData, predictionActivity_Closing);
+      predictionActivity = new PredictionActivity(tree, predictionActivity_Closing);
       predictionActivity.Show();
     }
 

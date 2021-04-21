@@ -32,8 +32,8 @@ namespace DecisionTreeCS {
       this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
       this.startTrainingBtn = new System.Windows.Forms.Button();
       this.showTreeBtn = new System.Windows.Forms.Button();
-      this.fieldsPanel = new System.Windows.Forms.FlowLayoutPanel();
       this.predictionsBtn = new System.Windows.Forms.Button();
+      this.fieldsPanel = new System.Windows.Forms.FlowLayoutPanel();
       this.tableLayoutPanel1.SuspendLayout();
       this.flowLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -131,16 +131,6 @@ namespace DecisionTreeCS {
       this.showTreeBtn.UseVisualStyleBackColor = true;
       this.showTreeBtn.Click += new System.EventHandler(this.showTreeBtn_Click);
       // 
-      // fieldsPanel
-      // 
-      this.fieldsPanel.AutoScroll = true;
-      this.fieldsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.fieldsPanel.Location = new System.Drawing.Point(3, 74);
-      this.fieldsPanel.Name = "fieldsPanel";
-      this.fieldsPanel.Padding = new System.Windows.Forms.Padding(5);
-      this.fieldsPanel.Size = new System.Drawing.Size(578, 284);
-      this.fieldsPanel.TabIndex = 1;
-      // 
       // predictionsBtn
       // 
       this.predictionsBtn.Enabled = false;
@@ -153,6 +143,16 @@ namespace DecisionTreeCS {
       this.predictionsBtn.UseVisualStyleBackColor = true;
       this.predictionsBtn.Click += new System.EventHandler(this.predictionsBtn_Click);
       // 
+      // fieldsPanel
+      // 
+      this.fieldsPanel.AutoScroll = true;
+      this.fieldsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.fieldsPanel.Location = new System.Drawing.Point(3, 74);
+      this.fieldsPanel.Name = "fieldsPanel";
+      this.fieldsPanel.Padding = new System.Windows.Forms.Padding(5);
+      this.fieldsPanel.Size = new System.Drawing.Size(578, 284);
+      this.fieldsPanel.TabIndex = 1;
+      // 
       // MainActivity
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -162,7 +162,7 @@ namespace DecisionTreeCS {
       this.Controls.Add(this.tableLayoutPanel1);
       this.MinimumSize = new System.Drawing.Size(600, 400);
       this.Name = "MainActivity";
-      this.Text = "Decision Tree";
+      this.Text = "Árbol de Decisión";
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       this.flowLayoutPanel1.ResumeLayout(false);
