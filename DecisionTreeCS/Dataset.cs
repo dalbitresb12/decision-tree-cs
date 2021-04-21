@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +80,7 @@ namespace DecisionTreeCS {
 
     public Row this[int index] {
       get => rows[index];
-      set => rows.Insert(index, value);
+      set => rows[index] = value;
     }
 
     public IEnumerator<Row> GetEnumerator() => rows.GetEnumerator();

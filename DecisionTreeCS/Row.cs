@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace DecisionTreeCS {
 
     public Feature this[int index] {
       get => features[index];
-      set => features.Insert(index, value);
+      set => features[index] = value;
     }
 
     public static Row ParseFromCsv(dynamic record) {
