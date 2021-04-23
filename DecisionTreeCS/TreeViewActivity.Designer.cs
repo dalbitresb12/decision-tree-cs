@@ -24,6 +24,7 @@ namespace DecisionTreeCS {
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TreeViewActivity));
       this.treeView = new System.Windows.Forms.TreeView();
       this.SuspendLayout();
       // 
@@ -43,6 +44,7 @@ namespace DecisionTreeCS {
       this.AutoScroll = true;
       this.ClientSize = new System.Drawing.Size(384, 261);
       this.Controls.Add(this.treeView);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MinimumSize = new System.Drawing.Size(400, 300);
       this.Name = "TreeViewActivity";
       this.Text = "Representación del árbol de decision generado";

@@ -24,6 +24,7 @@ namespace DecisionTreeCS {
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainActivity));
       this.fileSelectBtn = new System.Windows.Forms.Button();
       this.csvFileLoader = new System.Windows.Forms.OpenFileDialog();
       this.fileNameLabel = new System.Windows.Forms.Label();
@@ -160,6 +161,7 @@ namespace DecisionTreeCS {
       this.BackColor = System.Drawing.SystemColors.Control;
       this.ClientSize = new System.Drawing.Size(584, 361);
       this.Controls.Add(this.tableLayoutPanel1);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MinimumSize = new System.Drawing.Size(600, 400);
       this.Name = "MainActivity";
       this.Text = "Árbol de Decisión";
