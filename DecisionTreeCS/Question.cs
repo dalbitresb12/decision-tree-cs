@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DecisionTreeCS {
+﻿namespace DecisionTreeCS {
   class Question {
     readonly int property;
     readonly string propertyName;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DecisionTreeCS {
+﻿namespace DecisionTreeCS {
   class Feature {
     public dynamic Value {
       get; private set;

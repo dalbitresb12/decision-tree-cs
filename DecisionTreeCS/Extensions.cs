@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DecisionTreeCS {
+﻿namespace DecisionTreeCS {
   // This class is used to add methods to the native string class.
   // See more: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods
   public static class StringExtensions {

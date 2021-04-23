@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CsvHelper;
 
 namespace DecisionTreeCS {
   // We extend IEnumerable here to allow
