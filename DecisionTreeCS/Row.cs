@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DecisionTreeCS {
+  // We extend IEnumerable here to allow
+  // iteration using foreach loops
   class Row : IEnumerable<Feature> {
     readonly List<Feature> features;
 
@@ -23,11 +25,13 @@ namespace DecisionTreeCS {
 
     public void Clear() => features.Clear();
 
+    // This allows us to use the index operator in this class
     public Feature this[int index] {
       get => features[index];
       set => features[index] = value;
     }
 
+    // This method parses tries to parse a record using Feature.ParseFromCsv.
     public static Row ParseFromCsv(dynamic record) {
       if (record is IEnumerable enumerable) {
         Row row = new Row();

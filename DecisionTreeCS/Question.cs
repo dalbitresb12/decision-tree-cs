@@ -16,6 +16,10 @@ namespace DecisionTreeCS {
       this.feature = feature;
     }
 
+    // We receive an object of type Row, which is indexable. We then
+    // use the index of this Question to get the feature in that index.
+    // Then we test differently depending if this value is numeric or
+    // categorical.
     public bool Match(Row row) {
       Feature feature = row[property];
       if (feature.IsNumeric && this.feature.IsNumeric) {

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DecisionTreeCS {
+  // This class is used to add methods to the native string class.
+  // See more: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods
   public static class StringExtensions {
     public static string FirstCharToUpper(this string input) {
       if (string.IsNullOrEmpty(input))

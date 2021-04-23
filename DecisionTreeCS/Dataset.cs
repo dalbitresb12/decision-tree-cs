@@ -7,28 +7,35 @@ using System.Threading.Tasks;
 using CsvHelper;
 
 namespace DecisionTreeCS {
+  // We extend IEnumerable here to allow
+  // iteration using foreach loops
   class Dataset: IEnumerable<Row> {
     readonly List<string> headers;
     readonly List<Row> rows;
     bool hasConvertedFirstRow = false;
 
-    public Dataset(List<string> headers): this(null, headers) {}
+    public Dataset() {
+      rows = new List<Row>();
+      headers = new List<string>();
+    }
 
-    public Dataset(List <Row> rows = null, List<string> headers = null) {
-      if (rows == null) {
-        this.rows = new List<Row>();
-      } else {
-        this.rows = rows;
+    public Dataset(List<Row> rows) {
+      this.rows = rows;
+      headers = new List<string>();
+      for (int i = 0; i < MaxFeatureCount + 1; ++i) {
+        string header = $"Field{i + 1}";
+        headers.Add(header);
       }
-      if (headers == null) {
-        this.headers = new List<string>();
-        for (int i = 0; i < MaxFeatureCount + 1; ++i) {
-          string header = $"Field{i + 1}";
-          this.headers.Add(header);
-        }
-      } else {
-        this.headers = headers;
-      }
+    }
+
+    public Dataset(List<string> headers) {
+      rows = new List<Row>();
+      this.headers = headers;
+    }
+
+    public Dataset(List <Row> rows, List<string> headers) {
+      this.rows = rows;
+      this.headers = headers;
     }
 
     public List<string> Headers => headers;

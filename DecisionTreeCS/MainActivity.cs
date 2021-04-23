@@ -83,8 +83,9 @@ namespace DecisionTreeCS {
           // Clear any changes made to trainingData
           trainingData.Clear();
           // Inform the user parsing has failed
-          string title = "Failed to parse file";
-          string message = "An invalid CSV file was provided.";
+          string title = "¡Uh-oh!";
+          string message =
+            "Ha sucedido un problema al intentar leer el archivo CSV. Revisa que este tenga una sintaxis válida.";
           _ = MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
       }
@@ -123,7 +124,8 @@ namespace DecisionTreeCS {
       startTrainingBtn.Enabled = true;
       fileSelectBtn.Enabled = true;
       predictionsBtn.Enabled = true;
-      Focus();
+      // Re-focus the main window for the user to see it
+      _ = Focus();
     }
 
     private void showTreeBtn_Click(object sender, EventArgs e) {
